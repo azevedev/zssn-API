@@ -1,4 +1,4 @@
-class Api::SurvivorsController < ApplicationController
+class Api::V1::SurvivorsController < ApplicationController
     # POST /api/survivor --> Adds a new survivor to the database;
     
     def add_survivor
@@ -39,7 +39,7 @@ class Api::SurvivorsController < ApplicationController
         @survivors = Survivor.all
 
         # render json: {"total" => @survivors.count, "survivors" => @survivors}
-        render json: @survivors.first
+        render json: @survivors
     end
     # PUT /api/survivor --> Updates the location of one survivor;
     def update_location
