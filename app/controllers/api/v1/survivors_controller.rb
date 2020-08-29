@@ -30,7 +30,7 @@ class Api::V1::SurvivorsController < ApplicationController
     # GET /api/survivor --> Get one single survivor, given it's ID;
     def get_survivor 
         puts "get one single survivor"
-        @survivor = Survivor.find(params[:id])
+        @survivor = Survivor.find(params.require(:survivor_id).permit(:survivor_id))
         render json: {survivor: @survivor, inventory: [ @survivor.inventory, items: @survivor.inventory.items ] }
     end
     # GET /api/survivors --> Get all the survivors, non-infected included;
@@ -43,7 +43,16 @@ class Api::V1::SurvivorsController < ApplicationController
     end
     # PUT /api/survivor --> Updates the location of one survivor;
     def update_location
-        puts "updating survivor location"
+        @survivor = params.require(:survivor_id).permit(:survivor_id)
+        if !@survivor.nil?
+            puts "updating survivor location"
+            @survivor.location = Location.new(location_params)
+            if @survivor.save
+                render json: @survivor, status: :success
+            else
+                render json: @survivor.errors, status: :unprocessable_entity
+            end
+        else
     end
 
     def survivor_params
