@@ -37,7 +37,9 @@ class Api::SurvivorsController < ApplicationController
     def get_all_survivors
         puts "getting all survivors"
         @survivors = Survivor.all
-        render json: {"total"=> @survivors.count, "survivors" => @survivors}
+
+        # render json: {"total" => @survivors.count, "survivors" => @survivors}
+        render json: @survivors.first
     end
     # PUT /api/survivor --> Updates the location of one survivor;
     def update_location
