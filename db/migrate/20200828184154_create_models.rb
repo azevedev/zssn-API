@@ -4,6 +4,7 @@ class CreateModels < ActiveRecord::Migration[6.0]
       t.string :name
       t.integer :age
       t.string :gender
+      t.integer :reports, default: 0
       t.boolean :infected, default: false
       t.timestamps
     end
