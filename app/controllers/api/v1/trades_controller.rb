@@ -6,11 +6,8 @@ class Api::V1::TradesController < ApplicationController
         if !@sur1.nil? and !@sur2.nil?
             return render json: {"error" => "Survivor #{@sur1.id} is infected! Trade canceled..."} if @sur1.infected 
             return render json: {"error" => "Survivor #{@sur2.id} is infected! Trade canceled..."} if @sur2.infected 
-            @items_s1 = JSON.parse(params[:items_s1])
-            @items_s2 = JSON.parse(params[:items_s2])
-            puts "items..."
-            puts @items_s1
-            puts @items_s2
+            @items_s1 = JSON.parse(params[:items_s1].to_s)
+            @items_s2 = JSON.parse(params[:items_s2].to_s)
             sur1_items_hash = { 
                 "water"      => @sur1.inventory.items[0].amount,
                 "food"       => @sur1.inventory.items[1].amount,
@@ -18,19 +15,21 @@ class Api::V1::TradesController < ApplicationController
                 "ammunition" => @sur1.inventory.items[3].amount,
                 "coin"       => @sur1.inventory.items[4].amount
             }
-            puts "hashs1before"
-            puts sur1_items_hash
             sur2_add = Hash.new(0)
             @items_s1.each do |i|
-                sur2_add[i.first] += i.last 
-                if sur1_items_hash[i.first] >= i.last
-                    sur1_items_hash[i.first] -= i.last
-                else 
-                    return render json: {"error" => "Survivor (#{@sur1.id}) doesn't have all items to trade" }, status: :bad_request  
+                if !sur1_items_hash[i.first].nil?
+                    sur2_add[i.first] += i.last.to_i
+                    if sur1_items_hash[i.first] >= i.last.to_i
+                        sur1_items_hash[i.first] -= i.last.to_i
+                    else 
+                        puts "aisalksdjlkajsldkj"
+                        puts sur1_items_hash[i.first]
+                        puts i.last.to_i
+                        puts "ops"
+                        return render json: {"error" => "Survivor (#{@sur1.id}) doesn't have all items to trade" }, status: :bad_request  
+                    end
                 end
             end
-            puts "hashs1after"
-            puts sur1_items_hash
            
             sur2_items_hash = { 
                 "water"      => @sur2.inventory.items[0].amount,
@@ -39,19 +38,23 @@ class Api::V1::TradesController < ApplicationController
                 "ammunition" => @sur2.inventory.items[3].amount,
                 "coin"       => @sur2.inventory.items[4].amount
             }
-            puts "hashs2before"
-            puts sur2_items_hash
             sur1_add = Hash.new(0)
             @items_s2.each do |i|
-                sur1_add[i.first] += i.last
-                if sur2_items_hash[i.first] >= i.last
-                    sur2_items_hash[i.first] -= i.last
-                else 
-                    return render json: {"error" => "Survivor (#{@sur2.id}) doesn't have all items to trade" }, status: :bad_request  
+                if !sur2_items_hash[i.first].nil?
+                    sur1_add[i.first] += i.last.to_i
+                    if sur2_items_hash[i.first] >= i.last.to_i
+                        sur2_items_hash[i.first] -= i.last.to_i
+                    else 
+
+                        puts "aisudiuasd91826317263"
+                        puts sur2_items_hash[i.first]
+                        puts i.last.to_i
+                        puts i.first
+                        puts "ops"
+                        return render json: {"error" => "Survivor (#{@sur2.id}) doesn't have all items to trade" }, status: :bad_request  
+                    end
                 end
             end
-            puts "hashs2after"
-            puts sur2_items_hash
             result = evaluate(@items_s1, @items_s2)
             if(result == 0)
                 puts "updating...."

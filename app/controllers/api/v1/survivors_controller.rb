@@ -69,8 +69,8 @@ class Api::V1::SurvivorsController < ApplicationController
     
     # PUT /api/v1/survivor/:id/location --> Updates the location of one survivor;
     def update_location
-        params.require(:survivor_id)
-        id = params[:survivor_id]
+        params.require(:id)
+        id = params[:id]
         survivor = Survivor.find(id)
         if !survivor.nil?
             location_params

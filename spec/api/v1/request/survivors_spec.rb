@@ -1,15 +1,5 @@
 require 'rails_helper'
 
-
-# RSpec.describe "Survivors", type: :request do
-#     describe "GET /survivors" do
-#       it "works! (now write some real specs)" do
-#         get survivors_index_path
-#         expect(response).to have_http_status(200)
-#       end
-#     end
-#   end
-
 RSpec.describe "Survivors requests", type: :request do 
     describe 'API Version 1.0 -> GET /survivors' do 
         it 'returns a array of survivors' do
@@ -67,7 +57,7 @@ RSpec.describe "Survivors requests", type: :request do
 
     describe 'API Version 1.0 -> POST /survivors' do 
         it 'sends a request to create a new survivor' do
-            post('/api/v1/survivors', params: {name: "My Name", age: 25, gender: "Male", latitude: 123, longitude: 123, items: [["asd", 3]]} )
+            post api_v1_survivors_path, params: {name: "My Name", age: 25, gender: "Male", latitude: 123, longitude: 123, items: [["asd", 3]]}
             res = JSON.parse(response.body)
             expect(res).to include(
 
@@ -77,8 +67,8 @@ RSpec.describe "Survivors requests", type: :request do
     end
     
     describe 'API Version 1.0 -> PUT /survivor/:id/location' do 
-        it 'sends a request to create a new survivor' do
-            put('/api/v1/survivor/:id/location', params: {survivor_id: 1, longitude: 4123, latitude: 45413 } )
+        it 'sends a request to update a survivor location' do
+            put api_v1_location_path(1), params: { longitude: 4123, latitude: 45413 } 
             expect(response).to have_http_status(204)
         end
     end
