@@ -118,19 +118,14 @@ Here's a list of all End-point from the API with it's respectives arguments:
   ### params:
   	id: The id of the survivor to be reported
   ### example: 
-  	POST /api/v1/report/3
+  	POST http://localhost:3000/api/v1/report/3
 	
 ### GET	/api/v1/status
   > Get the current status of the API
   ### example: 
-   	GET /api/v1/status
+   	GET http://localhost:3000/api/v1/status
 
-## Contributing
-
-
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/gerencianet/gn-api-sdk-ruby. This project is intended to be a safe, welcoming space for collaboration.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](LICENSE).
+This project is 100% open source. Use it however you like it.
