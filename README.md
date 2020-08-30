@@ -8,6 +8,8 @@
 * [Tests](#tests)
 * [Basic Usage](#basic-usage)
 * [EndPoints](#endpoints)
+* [ToDo](#todo)
+8 [License](#license)
 	
 ## Technologies
 This project was created using:
@@ -128,9 +130,8 @@ Here's a list of all End-point from the API with it's respectives arguments:
 ## ToDo
   * Better way of authentication
   * Create store os coins, like a market place
-  * Add filtering to some of the methods (e.g, limit the number os registred survivors, etc)
+  * Add filtering to some of the methods (e.g, limit the number of registred survivors, etc)
   
-
 
 ## License
 
