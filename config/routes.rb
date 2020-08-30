@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       post "/trades", to: "trades#create"
       post "/reports/:id", to: "reports#create"
       get "/reports/:type", to: "reports#index"
+      get "/status", to: 'status#status'
 
     end
   end
