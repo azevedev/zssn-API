@@ -19,19 +19,15 @@ class Api::V1::ReportsController < ApplicationController
     end
 
     def index
-        puts "reporting..."
-        puts params[:type]
         case params[:type]
             when '1'
-                puts "one"
                 @total = Survivor.all.count
                 @infecteds = Survivor.where(:infected => true)
                 return render json: {"total_survivors" => @total, "total_infecteds" => @infecteds.count, "percentage" => (@infecteds.count.to_f/@total.to_f)*100, "infecteds" => @infecteds }
             when '2'
-                puts "two"
                 @total = Survivor.all.count
                 @non_infecteds = Survivor.where(:infected => false)
-                return render json: {"total_survivors" => @total, "total_non_infecteds" => @non_infecteds.count, "percentage" => (@non_infecteds.count.to_f/@total.to_f)*100, "non-infecteds" => @non_infecteds }
+                return render json: {"total_survivors" => @total, "total_not_infecteds" => @non_infecteds.count, "percentage" => (@non_infecteds.count.to_f/@total.to_f)*100, "not-infecteds" => @non_infecteds }
             when '3'
                 @survivor = Survivor.all
                 @avg_water = 0.0
@@ -53,7 +49,6 @@ class Api::V1::ReportsController < ApplicationController
                 @avg_coin /= @survivor.count
                 return render json: {"avg_water" => @avg_water, "avg_food" => @avg_food, "avg_medication" => @avg_med, "avg_ammunition" => @avg_ammo, "avg_coins" => @avg_coin }
             when '4'
-                puts "select one of theese"
                 @infecteds = Survivor.where(:infected => true)
                 @total = 0.0
                 @infecteds.each do |s|
@@ -65,8 +60,7 @@ class Api::V1::ReportsController < ApplicationController
                 end
                 return render json: {"points_lost" => @total, "total_infected" => @infecteds.count}
             else
-                puts "select one of theese"
-                return render json: {"error" => "The report id is missing or invalid. Options are [1, 2, 3, 4]"}
+                return render json: {"error" => "The report :type is #{ params[:type].nil? ? "missing" : "invalid" }. Valid options are [1, 2, 3, 4]"}, status: :bad_request
         end 
     end
 end

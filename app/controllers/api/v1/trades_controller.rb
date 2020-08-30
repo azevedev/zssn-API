@@ -4,9 +4,13 @@ class Api::V1::TradesController < ApplicationController
         @sur1 = Survivor.find(permitted[:survivor1_id])
         @sur2 = Survivor.find(permitted[:survivor2_id])
         if !@sur1.nil? and !@sur2.nil?
+            return render json: {"error" => "Survivor #{@sur1.id} is infected! Trade canceled..."} if @sur1.infected 
+            return render json: {"error" => "Survivor #{@sur2.id} is infected! Trade canceled..."} if @sur2.infected 
             @items_s1 = JSON.parse(params[:items_s1])
             @items_s2 = JSON.parse(params[:items_s2])
+            puts "items..."
             puts @items_s1
+            puts @items_s2
             sur1_items_hash = { 
                 "water"      => @sur1.inventory.items[0].amount,
                 "food"       => @sur1.inventory.items[1].amount,
@@ -14,15 +18,19 @@ class Api::V1::TradesController < ApplicationController
                 "ammunition" => @sur1.inventory.items[3].amount,
                 "coin"       => @sur1.inventory.items[4].amount
             }
+            puts "hashs1before"
+            puts sur1_items_hash
+            sur2_add = Hash.new(0)
             @items_s1.each do |i|
-                puts i
+                sur2_add[i.first] += i.last 
                 if sur1_items_hash[i.first] >= i.last
-                    puts "yess"
                     sur1_items_hash[i.first] -= i.last
                 else 
                     return render json: {"error" => "Survivor (#{@sur1.id}) doesn't have all items to trade" }, status: :bad_request  
                 end
             end
+            puts "hashs1after"
+            puts sur1_items_hash
            
             sur2_items_hash = { 
                 "water"      => @sur2.inventory.items[0].amount,
@@ -31,27 +39,35 @@ class Api::V1::TradesController < ApplicationController
                 "ammunition" => @sur2.inventory.items[3].amount,
                 "coin"       => @sur2.inventory.items[4].amount
             }
+            puts "hashs2before"
+            puts sur2_items_hash
+            sur1_add = Hash.new(0)
             @items_s2.each do |i|
+                sur1_add[i.first] += i.last
                 if sur2_items_hash[i.first] >= i.last
                     sur2_items_hash[i.first] -= i.last
                 else 
                     return render json: {"error" => "Survivor (#{@sur2.id}) doesn't have all items to trade" }, status: :bad_request  
                 end
             end
-
+            puts "hashs2after"
+            puts sur2_items_hash
             result = evaluate(@items_s1, @items_s2)
             if(result == 0)
-                @sur1.inventory.items[0].update(:amount => sur1_items_hash["water"])
-                @sur1.inventory.items[1].update(:amount => sur1_items_hash["food"])
-                @sur1.inventory.items[2].update(:amount => sur1_items_hash["medication"])
-                @sur1.inventory.items[3].update(:amount => sur1_items_hash["ammunition"])
-                @sur1.inventory.items[4].update(:amount => sur1_items_hash["coin"])
+                puts "updating...."
+                puts sur1_items_hash
+                puts sur2_items_hash
+                @sur1.inventory.items[0].update(:amount => sur1_items_hash["water"] + sur1_add["water"])
+                @sur1.inventory.items[1].update(:amount => sur1_items_hash["food"] + sur1_add["food"])
+                @sur1.inventory.items[2].update(:amount => sur1_items_hash["medication"] + sur1_add["medication"])
+                @sur1.inventory.items[3].update(:amount => sur1_items_hash["ammunition"] + sur1_add["ammunition"])
+                @sur1.inventory.items[4].update(:amount => sur1_items_hash["coin"] + sur1_add["coin"])
                 
-                @sur2.inventory.items[0].update(:amount => sur2_items_hash["water"])
-                @sur2.inventory.items[1].update(:amount => sur2_items_hash["food"])
-                @sur2.inventory.items[2].update(:amount => sur2_items_hash["medication"])
-                @sur2.inventory.items[3].update(:amount => sur2_items_hash["ammunition"])
-                @sur2.inventory.items[4].update(:amount => sur2_items_hash["coin"])
+                @sur2.inventory.items[0].update(:amount => sur2_items_hash["water"] + sur2_add["water"])
+                @sur2.inventory.items[1].update(:amount => sur2_items_hash["food"] + sur2_add["food"])
+                @sur2.inventory.items[2].update(:amount => sur2_items_hash["medication"] + sur2_add["medication"])
+                @sur2.inventory.items[3].update(:amount => sur2_items_hash["ammunition"] + sur2_add["ammunition"])
+                @sur2.inventory.items[4].update(:amount => sur2_items_hash["coin"] + sur2_add["coin"])
                 
                 return head :no_content
             else  
