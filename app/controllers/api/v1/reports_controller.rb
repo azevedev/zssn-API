@@ -1,11 +1,8 @@
 class Api::V1::ReportsController < ApplicationController
     
     def create
-        puts "tes"
         params.require(:id)
         survivor = Survivor.find(params[:id])
-        puts "ok ok"
-        puts survivor
         if !survivor.nil?
             survivor.reports += 1
             if(survivor.reports >= 3)
@@ -17,13 +14,11 @@ class Api::V1::ReportsController < ApplicationController
                 render json: survivor.errors, status: :unprocessable_entity
             end
         else  
-            puts "yeeeeeeeeeep"
             render json: {"error" => "Survivor #{params[:id]} not found"}, status: :not_found
         end
     end
 
     def index
-        puts "tesasihdjahsd"
         case params[:type]
             when '1'
                 total = Survivor.all.count

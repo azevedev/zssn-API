@@ -2,18 +2,12 @@ class Api::V1::SurvivorsController < ApplicationController
    
     # GET /api/v1/survivors --> Get all the survivors, non-infected included;
     def index
-        puts "getting all survivors"
         survivors = Survivor.all
-        puts survivors
-        puts "dude"
-        puts params
         render json: {"total" => 7, "survivors" => survivors.select(:id, :name, :age, :gender, :reports, :infected) } , status: :ok
-        # render json: @survivors
     end
 
     # GET /api/v1/survivor --> Get one single survivor, given it's ID;
     def show 
-        puts "get one single survivor"
         params.require(:id)
         survivor = Survivor.select(:id, :name, :age, :gender, :reports, :infected).where(id: params.permit(:id)[:id]).first
         location = Location.select(:id, :latitude, :longitude).where(id: survivor.id).first
@@ -34,26 +28,13 @@ class Api::V1::SurvivorsController < ApplicationController
         survivor.inventory.items.push(Item.new(:name => "medication", :value => 2 , :weight => 1))
         survivor.inventory.items.push(Item.new(:name => "ammunition", :value => 1 , :weight => 4))
         survivor.inventory.items.push(Item.new(:name => "coin", :value => 1 , :weight => 0))
-        # survivor.inventory.save
         p_items = params.require(:items).to_s
-        puts params
-        puts "getting items..."
-        puts p_items
-        if p_items.size > 0
-            puts "not empty"
-        else 
-            puts "empty"
-        end
         items = JSON.parse(p_items)
         keys = {"water" => 0, "food" => 1, "medication" => 2, "ammunition" => 3, "coin" => 4}
         keys.default = 5
-        puts keys["water"]
-        puts keys["asd"]
         capacity = 0
         items.each do |item|
             sur_good = survivor.inventory.items[keys[item.first]]
-            puts "item"
-            puts item
             if !sur_good.nil?
                 sur_good.amount += item.last
                 capacity += sur_good.weight * item.last

@@ -3,13 +3,8 @@ Rails.application.routes.draw do
   namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
       resources :survivors
-      # post "/survivor", to: "survivors#add_survivor"
-      # get "/survivor", to: "survivors#get_survivor"
-      # get "/survivors", to: "survivors#get_all_survivors"
       put "/survivor/:id/location", to: "survivors#update_location", as: :location
       post "/trades", to: "trades#create"
-      # post "/reports/:id", to: "reports#create", as: :report
-      # get "/reports/:type", to: "reports#index", as: :report
       resources :reports
       get "/status", to: 'status#status'
 

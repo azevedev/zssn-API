@@ -22,10 +22,6 @@ class Api::V1::TradesController < ApplicationController
                     if sur1_items_hash[i.first] >= i.last.to_i
                         sur1_items_hash[i.first] -= i.last.to_i
                     else 
-                        puts "aisalksdjlkajsldkj"
-                        puts sur1_items_hash[i.first]
-                        puts i.last.to_i
-                        puts "ops"
                         return render json: {"error" => "Survivor (#{@sur1.id}) doesn't have all items to trade" }, status: :bad_request  
                     end
                 end
@@ -45,21 +41,12 @@ class Api::V1::TradesController < ApplicationController
                     if sur2_items_hash[i.first] >= i.last.to_i
                         sur2_items_hash[i.first] -= i.last.to_i
                     else 
-
-                        puts "aisudiuasd91826317263"
-                        puts sur2_items_hash[i.first]
-                        puts i.last.to_i
-                        puts i.first
-                        puts "ops"
                         return render json: {"error" => "Survivor (#{@sur2.id}) doesn't have all items to trade" }, status: :bad_request  
                     end
                 end
             end
             result = evaluate(@items_s1, @items_s2)
             if(result == 0)
-                puts "updating...."
-                puts sur1_items_hash
-                puts sur2_items_hash
                 @sur1.inventory.items[0].update(:amount => sur1_items_hash["water"] + sur1_add["water"])
                 @sur1.inventory.items[1].update(:amount => sur1_items_hash["food"] + sur1_add["food"])
                 @sur1.inventory.items[2].update(:amount => sur1_items_hash["medication"] + sur1_add["medication"])
@@ -101,14 +88,12 @@ class Api::V1::TradesController < ApplicationController
             value += el[0] == "medication" ? 2 * el[1] : 0  
             value += el[0] == "ammunition" ? 1 * el[1] : 0  
         end
-        puts value
         arr2.each do |el|
             value -= el[0] == "water"     ? 4 * el[1] : 0  
             value -= el[0] == "food"       ? 3 * el[1] : 0  
             value -= el[0] == "medication" ? 2 * el[1] : 0  
             value -= el[0] == "ammunition" ? 1 * el[1] : 0  
         end
-        puts value
         value
     end
 
