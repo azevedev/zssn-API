@@ -125,6 +125,12 @@ Here's a list of all End-point from the API with it's respectives arguments:
   ### example: 
    	GET http://localhost:3000/api/v1/status
 
+## ToDo
+  * Better way of authentication
+  * Create store os coins, like a market place
+  * Add filtering to some of the methods (e.g, limit the number os registred survivors, etc)
+  
+
 
 ## License
 
