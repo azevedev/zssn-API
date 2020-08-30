@@ -10,7 +10,7 @@
 * [EndPoints](#endpoints)
 	
 ## Technologies
-Project was created with:
+This project was created using:
 * Ruby 2.6.3
 * Rails 6.0.3
 * RSpec Rails 4.0.1
