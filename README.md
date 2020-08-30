@@ -8,8 +8,8 @@
 * [Tests](#tests)
 * [Basic Usage](#basic-usage)
 * [EndPoints](#endpoints)
-* [ToDo](#todo)
-8 [License](#license)
+* [Todo](#todo)
+* [License](#license)
 	
 ## Technologies
 This project was created using:
