@@ -1,33 +1,38 @@
 class Api::V1::ReportsController < ApplicationController
     
     def create
+        puts "tes"
         params.require(:id)
-        @survivor = Survivor.find(params[:id])
-        if !@survivor.nil?
-            @survivor.reports += 1
-            if(@survivor.reports >= 3)
-                @survivor.infected = true
+        survivor = Survivor.find(params[:id])
+        puts "ok ok"
+        puts survivor
+        if !survivor.nil?
+            survivor.reports += 1
+            if(survivor.reports >= 3)
+                survivor.infected = true
             end
-            if @survivor.save 
+            if survivor.save 
                 head :no_content
             else
-                render json: @survivor.errors, status: :unprocessable_entity
+                render json: survivor.errors, status: :unprocessable_entity
             end
         else  
+            puts "yeeeeeeeeeep"
             render json: {"error" => "Survivor #{params[:id]} not found"}, status: :not_found
         end
     end
 
     def index
+        puts "tesasihdjahsd"
         case params[:type]
             when '1'
-                @total = Survivor.all.count
-                @infecteds = Survivor.where(:infected => true)
-                return render json: {"total_survivors" => @total, "total_infecteds" => @infecteds.count, "percentage" => (@infecteds.count.to_f/@total.to_f)*100, "infecteds" => @infecteds }
+                total = Survivor.all.count
+                infecteds = Survivor.where(:infected => true)
+                return render json: {"total_survivors" => total, "total_infecteds" => infecteds.count, "percentage" => (infecteds.count.to_f/total.to_f)*100, "infecteds" => infecteds.select(:id, :name, :age, :gender, :reports, :infected) }
             when '2'
-                @total = Survivor.all.count
-                @non_infecteds = Survivor.where(:infected => false)
-                return render json: {"total_survivors" => @total, "total_not_infecteds" => @non_infecteds.count, "percentage" => (@non_infecteds.count.to_f/@total.to_f)*100, "not-infecteds" => @non_infecteds }
+                total = Survivor.all.count
+                non_infecteds = Survivor.where(:infected => false)
+                return render json: {"total_survivors" => total, "total_not_infecteds" => non_infecteds.count, "percentage" => (non_infecteds.count.to_f/total.to_f)*100, "not-infecteds" => non_infecteds.select(:id, :name, :age, :gender, :reports, :infected) }
             when '3'
                 @survivor = Survivor.all
                 @avg_water = 0.0

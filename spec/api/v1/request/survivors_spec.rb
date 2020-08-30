@@ -9,7 +9,7 @@ RSpec.describe "Survivors requests", type: :request do
                 { 
                     "total" => 7, 
                     "survivors" => [
-                        {"age"=>21, "gender"=>"Male", "id"=>1, "infected"=>false, "name"=>"Jorge", "reports"=>0}, 
+                        {"name" => "", "age"=>21, "gender"=>"Male", "id"=>1, "infected"=>false, "name"=>"Jorge", "reports"=>0}, 
                         {"age"=>32, "gender"=>"Female", "id"=>2, "infected"=>false, "name"=>"Marge", "reports"=>0}, 
                         {"age"=>19, "gender"=>"Male", "id"=>3, "infected"=>false, "name"=>"Phill", "reports"=>2}, 
                         {"age"=>24, "gender"=>"Female", "id"=>4, "infected"=>false, "name"=>"Pamn", "reports"=>1}, 
