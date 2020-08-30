@@ -72,7 +72,7 @@ Here's a list of all End-point from the API with it's respectives arguments:
     items: An array of items the survivor has, in the form "[ [item_name, item_amount], [item_name, item_amount], [item_name, item_amount]... ]" (*required)
     capacity: A number that represents the amount of weight one survivor can carry
   ### example:
-    POST http://127.0.0.1:3000/api/v1/survivors?name='user 2'&age=23&gender='Female'&latitude= 4430&longitude= 223&items= [["watter", 2], ["food",4 ]]
+    POST http://127.0.0.1:3000/api/v1/survivors?name='UserName'&age=20&gender='Female'&latitude=1234&longitude=4321&items=[["watter", 2], ["food",4 ]]
 
 ### GET	/api/v1/survivors/:id
   > Get one single survivor
@@ -90,7 +90,7 @@ Here's a list of all End-point from the API with it's respectives arguments:
 	latitude: The latitude of the survivor (*required)
 	longitude: The longitude of the survivor (*required)
   ### example:
-    PUT	/api/v1/survivor/1/location?latitude="1221",logintude="4125"
+    PUT	/api/v1/survivor/1/location?latitude="123",logintude="321"
   	
 ### POST /api/v1/trades
   > Create a trade betweens two survivors
@@ -100,12 +100,12 @@ Here's a list of all End-point from the API with it's respectives arguments:
      items_s1: An array of items that survivor1 wants to trade (*required)
      items_s2: An array of items that survivor2 wants to trade (*required)
   ### example:
-  	PUT http://127.0.0.1:3000/api/v1/trades?survivor1_id=4&survivor2_id=5&items_s1= [["food", 2], ["medication", 2], ["food", 2]]&items_s2= [["food", 2], ["ammunition", 2], ["food", 2]]
+  	PUT http://127.0.0.1:3000/api/v1/trades?survivor1_id=4&survivor2_id=5&items_s1=[["food", 2], ["medication", 2], ["food", 2]]&items_s2=[["food", 2], ["ammunition", 2], ["food", 2]]
 ### GET	/api/v1/reports/:type
    > Get one of the reports available from the API
    
    ### params:
-     type: The type of report desirable (*required). The types are:
+     type: The type of report desirable (*required). All types are:
      
        1 - Percentage of infected survivors
        2 - Percentage of non-infected survivors
@@ -115,7 +115,7 @@ Here's a list of all End-point from the API with it's respectives arguments:
    	GET http://localhost:3000/api/v1/reports/3 
 
 ### POST /api/v1/report/:id
-  > Report a single survivor as infected. If one survivor get 3 or more reports, then it's marked as infected (flagged)
+  > Report a single survivor as infected. If one survivor gets 3 or more reports, then it's marked as infected (flagged)
   
   ### params:
   	id: The id of the survivor to be reported
