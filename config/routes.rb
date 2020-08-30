@@ -5,7 +5,9 @@ Rails.application.routes.draw do
       resources :survivors
       put "/survivor/:id/location", to: "survivors#update_location", as: :location
       post "/trades", to: "trades#create"
-      resources :reports
+      # resources :reports
+      get "/reports/:type", to: "reports#index", as: :reports
+      post "/report/:id", to: "reports#create", as: :report
       get "/status", to: 'status#status'
 
     end
