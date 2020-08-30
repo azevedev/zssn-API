@@ -6,7 +6,7 @@ RSpec.describe "Status API" do
             get('/api/v1/status')
             res = JSON.parse(response.body)
             expect(res['status']).to eql('ok')
-            expect(response.status).to eql(200)
+            expect(response).to have_http_status(200)
         end
     end
 end
