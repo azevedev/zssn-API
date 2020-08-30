@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       # get "/survivors", to: "survivors#get_all_survivors"
       put "/survivor/:id/location", to: "survivors#update_location"
       post "/trades", to: "trades#create"
+      post "/reports/:id", to: "reports#create"
+      get "/reports/:type", to: "reports#index"
+
     end
   end
 end
