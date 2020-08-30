@@ -70,7 +70,7 @@ Here's a list of all End-point from the API with it's respectives arguments:
     items: An array of items the survivor has, in the form "[ [item_name, item_amount], [item_name, item_amount], [item_name, item_amount]... ]" (*required)
     capacity: A number that represents the amount of weight one survivor can carry
   ### example:
-    POST http://127.0.0.1:3000/api/v1/survivors?name='user 2'&age=23&gender='FEMALE'&latitude= 4430&longitude= 223&mal='intentions'&items= [["watter", 2], ["food",4 ]]
+    POST http://127.0.0.1:3000/api/v1/survivors?name='user 2'&age=23&gender='Female'&latitude= 4430&longitude= 223&items= [["watter", 2], ["food",4 ]]
 
 ### GET	/api/v1/survivors/:id
   > Get one single survivor
