@@ -62,14 +62,14 @@ Here's a list of all End-point from the API with it's respectives arguments:
     gender: "Male" or "Female" (*required)
     latitude: A number (Float) of the latitude of the survivor (*required)
     longitude: A number (Float) of the longitude of the survivor (*required)
-    items: An array of items the survivor has, in the form "[ [item_name, item_amount], [item_name, item_amount], [item_name, item_amount]... ]"
+    items: An array of items the survivor has, in the form "[ [item_name, item_amount], [item_name, item_amount], [item_name, item_amount]... ]" (*required)
     capacity: A number that represents the amount of weight one survivor can carry
 
 ### GET	/api/v1/survivors/:id
   > Get one single survivor
   
   #### params:
-    id: The id of the survivor
+    id: The id of the survivor (*required)
 
 ### PUT	/api/v1/survivor/:id/location
   > Update the location of one survivor
@@ -80,7 +80,7 @@ Here's a list of all End-point from the API with it's respectives arguments:
 	longitude: The longitude of the survivor (*required)
 
 ### POST /api/v1/trades
-  > Realize trades betweens two survivors
+  > Create a trade betweens two survivors
   ### params: 
      survivor1_id: The id for the first trader (*required)
      survivor2_id: The id for the first trader (*required)
@@ -88,15 +88,15 @@ Here's a list of all End-point from the API with it's respectives arguments:
      items_s2: An array of items that survivor2 wants to trade (*required)
 
 ### GET	/api/v1/reports/:type
-   > Get one of the reporst available from the API
+   > Get one of the reports available from the API
    
    ### params:
      type: The type of report desirable (*required). The types are:
      
-        * 1 - Percentage of infected survivors
-	* 2 - Percentage of non-infected survivors
- 	* 3 - Average amount of each kind of resource by survivor
-	* 4 - Points lost because of infected survivors
+       1 - Percentage of infected survivors
+       2 - Percentage of non-infected survivors
+       3 - Average amount of each kind of resource by survivor
+       4 - Points lost because of infected survivors
 
 ### POST /api/v1/report/:id
   > Report a single survivor as infected. If one survivor get 3 or more reports, then it's marked as infected (flagged)
