@@ -128,9 +128,9 @@ Here's a list of all End-point from the API with it's respectives arguments:
    	GET http://localhost:3000/api/v1/status
 
 ## ToDo
-  * Better way of authentication
-  * Create store os coins, like a market place
-  * Add filtering to some of the methods (e.g, limit the number of registred survivors, etc)
+  * Better way of authentication (API Key or Login before any action)
+  * Create storage os coins, like a market place
+  * Add filttering to some methods (e.g. limit the number of survivors on a request, only get non-infected survivors, etc)
   
 
 ## License
