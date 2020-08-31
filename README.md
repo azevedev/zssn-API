@@ -29,10 +29,15 @@ $ rails s
 
 
 ## Tests
-To run tests, just use:
+To run tests, first use:
+```
+$ rails RAILS_ENV=test db:seed
+```
+After seeding, then use:
 ```
 $ bundle exec rspec
 ```
+
 ## Basic usage
 
 ```ruby
